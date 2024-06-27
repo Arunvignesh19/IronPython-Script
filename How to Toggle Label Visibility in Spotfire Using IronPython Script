@@ -1,0 +1,52 @@
+How to Toggle Label Visibility in Spotfire Using IronPython Script
+Are you looking to enhance your Spotfire visualizations by dynamically toggling label visibility? This blog will guide you through using IronPython scripts to switch labels on and off in your Spotfire dashboards. Whether you're a beginner or an advanced user, you'll find this tutorial helpful for making your visualizations more interactive and user-friendly.
+
+Introduction
+TIBCO Spotfire is a powerful analytics tool that enables users to create insightful data visualizations. One of the features that can make your visualizations more dynamic is the ability to control label visibility using IronPython scripts. In this tutorial, we'll show you how to write a script that toggles the visibility of labels for all visualizations in a Spotfire dashboard.
+
+Step-by-Step Guide
+Prerequisites
+Basic understanding of Spotfire and IronPython scripting
+Spotfire installed on your machine
+Access to a Spotfire analysis file (.dxp)
+Script Overview
+The IronPython script provided below will iterate through all the pages and visualizations in your Spotfire document and toggle the label visibility. If labels are currently hidden, the script will make them visible, and vice versa.
+
+The Script
+Here’s the IronPython script to achieve this:
+
+python
+Copy code
+from Spotfire.Dxp.Application.Visuals import *
+
+for page in Application.Document.Pages:
+    for vis in page.Visuals:
+        myVis = vis.As[VisualContent]()
+        if(myVis.TypeId != VisualTypeIdentifiers.HtmlTextArea and myVis.TypeId != VisualTypeIdentifiers.PieChart):
+            print(myVis.TypeId)
+            if(myVis.LabelVisibility == LabelVisibility.None):
+                myVis.LabelVisibility = LabelVisibility.All
+            elif(myVis.LabelVisibility != LabelVisibility.None):
+                myVis.LabelVisibility = LabelVisibility.None
+How the Script Works
+Import the necessary module: The script begins by importing the Visuals module from Spotfire.Dxp.Application.
+
+Iterate through all pages: The script loops through each page in the Spotfire document.
+
+Iterate through all visualizations on each page: For each page, the script loops through all the visualizations.
+
+Check visualization type: The script checks if the visualization type is not HtmlTextArea or PieChart. These visualizations are excluded from label toggling.
+
+Toggle label visibility: The script toggles the label visibility. If the labels are currently hidden (LabelVisibility.None), it makes them visible (LabelVisibility.All). If the labels are visible, it hides them.
+
+Running the Script
+To run the script in Spotfire:
+
+Open your Spotfire analysis file (.dxp).
+Go to the Edit menu and select IronPython Script....
+Copy and paste the script into the script editor.
+Click Run Script.
+Conclusion
+By following this tutorial, you can easily toggle the visibility of labels in your Spotfire visualizations using IronPython scripts. This feature is especially useful for creating more interactive and user-friendly dashboards. We hope you found this guide helpful. Stay tuned for more Spotfire tips and tricks!
+
+Don't forget to share this blog, leave your comments, and subscribe for more updates on Spotfire and data visualization techniques.
